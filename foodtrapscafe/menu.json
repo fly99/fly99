@@ -1,0 +1,1017 @@
+[
+  [
+    "M001",
+    "Coffee",
+    "Americano",
+    90,
+    true
+  ],
+  [
+    "M002",
+    "Coffee",
+    "Americano (Hot)",
+    85,
+    true
+  ],
+  [
+    "M003",
+    "Coffee",
+    "Latte",
+    95,
+    true
+  ],
+  [
+    "M004",
+    "Coffee",
+    "Latte (Hot)",
+    90,
+    true
+  ],
+  [
+    "M005",
+    "Coffee",
+    "Cappuccino",
+    99,
+    true
+  ],
+  [
+    "M006",
+    "Coffee",
+    "Spanish Latte",
+    99,
+    true
+  ],
+  [
+    "M007",
+    "Coffee",
+    "Spanish Latte (Hot)",
+    90,
+    true
+  ],
+  [
+    "M008",
+    "Coffee",
+    "Sea Salt Latte",
+    99,
+    true
+  ],
+  [
+    "M009",
+    "Coffee",
+    "Sea Salt Latte (Hot)",
+    110,
+    true
+  ],
+  [
+    "M010",
+    "Coffee",
+    "Caramel Macchiato",
+    110,
+    true
+  ],
+  [
+    "M011",
+    "Coffee",
+    "Caramel Macchiato (Hot)",
+    115,
+    true
+  ],
+  [
+    "M012",
+    "Coffee",
+    "Iced Choco Latte",
+    120,
+    true
+  ],
+  [
+    "M013",
+    "Coffee",
+    "Hazelnut Almond",
+    125,
+    true
+  ],
+  [
+    "M014",
+    "Coffee",
+    "Butterscotch",
+    120,
+    true
+  ],
+  [
+    "M015",
+    "Coffee",
+    "Nutella Latte",
+    125,
+    true
+  ],
+  [
+    "M016",
+    "Coffee",
+    "Biscoff Latte",
+    125,
+    true
+  ],
+  [
+    "M017",
+    "Coffee",
+    "Popcorn Latte",
+    155,
+    true
+  ],
+  [
+    "M018",
+    "Coffee",
+    "Pistachio Latte",
+    175,
+    true
+  ],
+  [
+    "M019",
+    "Coffee",
+    "Matcha Latte",
+    120,
+    true
+  ],
+  [
+    "M020",
+    "Coffee",
+    "Cookie Latte",
+    120,
+    true
+  ],
+  [
+    "M021",
+    "Coffee",
+    "Vanilla Egg Latte",
+    120,
+    true
+  ],
+  [
+    "M022",
+    "Add-ons",
+    "Espresso Shot",
+    30,
+    true
+  ],
+  [
+    "M023",
+    "Add-ons",
+    "Oat Milk",
+    30,
+    true
+  ],
+  [
+    "M024",
+    "Non-Coffee",
+    "Iced Choco",
+    90,
+    true
+  ],
+  [
+    "M025",
+    "Non-Coffee",
+    "Cookies N’ Cream",
+    99,
+    true
+  ],
+  [
+    "M026",
+    "Non-Coffee",
+    "Matcha",
+    99,
+    true
+  ],
+  [
+    "M027",
+    "Non-Coffee",
+    "Egg Matcha",
+    110,
+    true
+  ],
+  [
+    "M028",
+    "Non-Coffee",
+    "Matcha Oreo",
+    120,
+    true
+  ],
+  [
+    "M029",
+    "Non-Coffee",
+    "Strawberry Matcha",
+    120,
+    true
+  ],
+  [
+    "M030",
+    "Non-Coffee",
+    "Blueberry Matcha",
+    120,
+    true
+  ],
+  [
+    "M031",
+    "Non-Coffee",
+    "Mango Matcha",
+    120,
+    true
+  ],
+  [
+    "M032",
+    "Non-Coffee",
+    "Strawberry Choco",
+    120,
+    true
+  ],
+  [
+    "M033",
+    "Non-Coffee",
+    "Blueberry Milk",
+    90,
+    true
+  ],
+  [
+    "M034",
+    "Non-Coffee",
+    "Green Apple Milk",
+    90,
+    true
+  ],
+  [
+    "M035",
+    "Sharing",
+    "Sweet Chili Pork Belly",
+    399,
+    true
+  ],
+  [
+    "M036",
+    "Sharing",
+    "Pork Cutlet",
+    399,
+    true
+  ],
+  [
+    "M037",
+    "Sharing",
+    "Lechon Kawali",
+    429,
+    true
+  ],
+  [
+    "M038",
+    "Sharing",
+    "Pork Buffalo",
+    399,
+    true
+  ],
+  [
+    "M039",
+    "Sharing",
+    "Creamy Mushroom Chicken",
+    399,
+    true
+  ],
+  [
+    "M040",
+    "Sharing",
+    "Chicken Cutlet",
+    389,
+    true
+  ],
+  [
+    "M041",
+    "Sharing",
+    "Salted Egg Chicken",
+    429,
+    true
+  ],
+  [
+    "M042",
+    "Sharing",
+    "Chicken BBQ",
+    389,
+    true
+  ],
+  [
+    "M043",
+    "Sharing",
+    "Chicken Parmesan",
+    429,
+    true
+  ],
+  [
+    "M044",
+    "Sharing",
+    "Buffalo Chicken",
+    389,
+    true
+  ],
+  [
+    "M045",
+    "Sharing",
+    "Beef Mushroom Steak",
+    459,
+    true
+  ],
+  [
+    "M046",
+    "Sharing",
+    "Beef Salpicao",
+    459,
+    true
+  ],
+  [
+    "M047",
+    "Sharing",
+    "Buttered Shrimp",
+    429,
+    true
+  ],
+  [
+    "M048",
+    "Sharing",
+    "Bicol Express",
+    429,
+    true
+  ],
+  [
+    "M049",
+    "Sharing",
+    "Honey Glazed Chicken",
+    389,
+    true
+  ],
+  [
+    "M050",
+    "Noodles",
+    "Bihon Guisado",
+    199,
+    true
+  ],
+  [
+    "M051",
+    "Noodles",
+    "Sotanghon Guisado",
+    239,
+    true
+  ],
+  [
+    "M052",
+    "Noodles",
+    "Lumpia",
+    180,
+    true
+  ],
+  [
+    "M053",
+    "Seafood",
+    "Pork Sinigang",
+    449,
+    true
+  ],
+  [
+    "M054",
+    "Seafood",
+    "Shrimp Sinigang",
+    459,
+    true
+  ],
+  [
+    "M055",
+    "Seafood",
+    "Pochero",
+    449,
+    true
+  ],
+  [
+    "M056",
+    "Sharing Platter",
+    "Platter A",
+    599,
+    true
+  ],
+  [
+    "M057",
+    "Sharing Platter",
+    "Platter B",
+    699,
+    true
+  ],
+  [
+    "M058",
+    "Sharing Platter",
+    "Platter C",
+    899,
+    true
+  ],
+  [
+    "M059",
+    "Wings Platter",
+    "W1",
+    699,
+    true
+  ],
+  [
+    "M060",
+    "Wings Platter",
+    "W2",
+    799,
+    true
+  ],
+  [
+    "M061",
+    "Wings Platter",
+    "W3",
+    999,
+    true
+  ],
+  [
+    "M062",
+    "Burgers",
+    "Classic Burger",
+    99,
+    true
+  ],
+  [
+    "M063",
+    "Burgers",
+    "Cheese Burger",
+    120,
+    true
+  ],
+  [
+    "M064",
+    "Burgers",
+    "Chicken Cheese Burger",
+    179,
+    true
+  ],
+  [
+    "M065",
+    "Burgers",
+    "Double Cheese Burger",
+    179,
+    true
+  ],
+  [
+    "M066",
+    "Burgers",
+    "Buffalo Burger",
+    189,
+    true
+  ],
+  [
+    "M067",
+    "Burgers",
+    "Bacon Burger",
+    229,
+    true
+  ],
+  [
+    "M068",
+    "Burgers",
+    "Olive Burger",
+    249,
+    true
+  ],
+  [
+    "M069",
+    "Fries",
+    "Plain",
+    60,
+    true
+  ],
+  [
+    "M070",
+    "Fries",
+    "Cheese",
+    70,
+    true
+  ],
+  [
+    "M071",
+    "Fries",
+    "BBQ",
+    70,
+    true
+  ],
+  [
+    "M072",
+    "Fries",
+    "Sour Cream",
+    70,
+    true
+  ],
+  [
+    "M073",
+    "Mojos",
+    "Plain",
+    99,
+    true
+  ],
+  [
+    "M074",
+    "Mojos",
+    "Cheese",
+    129,
+    true
+  ],
+  [
+    "M075",
+    "Mojos",
+    "BBQ",
+    129,
+    true
+  ],
+  [
+    "M076",
+    "Mojos",
+    "Sour Cream",
+    129,
+    true
+  ],
+  [
+    "M077",
+    "Sides",
+    "Nacho Fries",
+    169,
+    true
+  ],
+  [
+    "M078",
+    "Sides",
+    "Meaty Fries",
+    149,
+    true
+  ],
+  [
+    "M079",
+    "Sides",
+    "Fries/Lumpia",
+    159,
+    true
+  ],
+  [
+    "M080",
+    "Sides",
+    "Lumpia (6 pcs)",
+    15,
+    true
+  ],
+  [
+    "M081",
+    "Chicken Wings",
+    "Parmesan",
+    120,
+    true
+  ],
+  [
+    "M082",
+    "Chicken Wings",
+    "Spicy Parmesan",
+    129,
+    true
+  ],
+  [
+    "M083",
+    "Chicken Wings",
+    "Salted Egg",
+    139,
+    true
+  ],
+  [
+    "M084",
+    "Chicken Wings",
+    "Buffalo",
+    99,
+    true
+  ],
+  [
+    "M085",
+    "Chicken Wings",
+    "BBQ",
+    99,
+    true
+  ],
+  [
+    "M086",
+    "Chicken Wings",
+    "Soy Honey Glazed",
+    99,
+    true
+  ],
+  [
+    "M087",
+    "Chicken Wings",
+    "Hot Honey Glazed",
+    110,
+    true
+  ],
+  [
+    "M088",
+    "Golden Wings",
+    "Golden Fried Chicken Wings",
+    359,
+    true
+  ],
+  [
+    "M089",
+    "Wraps",
+    "Chicken Wrap",
+    149,
+    true
+  ],
+  [
+    "M090",
+    "Wraps",
+    "Pork Shawarma",
+    129,
+    true
+  ],
+  [
+    "M091",
+    "Wraps",
+    "Lettuce Wrap",
+    159,
+    true
+  ],
+  [
+    "M092",
+    "Wraps",
+    "Bacon Wrap",
+    199,
+    true
+  ],
+  [
+    "M093",
+    "Refreshments",
+    "Ube Halo-Halo",
+    125,
+    true
+  ],
+  [
+    "M094",
+    "Refreshments",
+    "Mais Con Yelo",
+    125,
+    true
+  ],
+  [
+    "M095",
+    "Pitchers",
+    "Cucumber Lemonade 1 Liter",
+    129,
+    true
+  ],
+  [
+    "M096",
+    "Pitchers",
+    "Cucumber Lemonade 16 oz",
+    60,
+    true
+  ],
+  [
+    "M097",
+    "Pitchers",
+    "Blue Lemonade 1 Liter",
+    129,
+    true
+  ],
+  [
+    "M098",
+    "Pitchers",
+    "Blue Lemonade 16 oz",
+    60,
+    true
+  ],
+  [
+    "M099",
+    "Shake",
+    "Mango Shake",
+    99,
+    true
+  ],
+  [
+    "M100",
+    "Shake",
+    "Cucumber Shake",
+    99,
+    true
+  ],
+  [
+    "M101",
+    "Yakult Series",
+    "Lychee 22 oz",
+    120,
+    true
+  ],
+  [
+    "M102",
+    "Yakult Series",
+    "Lemon 22 oz",
+    120,
+    true
+  ],
+  [
+    "M103",
+    "Yakult Series",
+    "Honey Lemon 22 oz",
+    120,
+    true
+  ],
+  [
+    "M104",
+    "Yakult Series",
+    "Strawberry 22 oz",
+    120,
+    true
+  ],
+  [
+    "M105",
+    "Yakult Series",
+    "Blueberry 22 oz",
+    120,
+    true
+  ],
+  [
+    "M106",
+    "Yakult Series",
+    "Kiwi 22 oz",
+    120,
+    true
+  ],
+  [
+    "M107",
+    "Soda Series",
+    "Green Apple 12 oz",
+    60,
+    true
+  ],
+  [
+    "M108",
+    "Soda Series",
+    "Honey Lemon 12 oz",
+    60,
+    true
+  ],
+  [
+    "M109",
+    "Soda Series",
+    "Blueberry 12 oz",
+    60,
+    true
+  ],
+  [
+    "M110",
+    "Soda Series",
+    "Strawberry 12 oz",
+    60,
+    true
+  ],
+  [
+    "M111",
+    "Soda Series",
+    "Passion Fruit 12 oz",
+    65,
+    true
+  ],
+  [
+    "M112",
+    "Soda Series",
+    "Kiwi 12 oz",
+    65,
+    true
+  ],
+  [
+    "M113",
+    "Soda Series",
+    "Coke 12 oz",
+    25,
+    true
+  ],
+  [
+    "M114",
+    "Soda Series",
+    "Sprite 12 oz",
+    25,
+    true
+  ],
+  [
+    "M115",
+    "Soda Series",
+    "Royal 12 oz",
+    25,
+    true
+  ],
+  [
+    "M116",
+    "Frapped Base",
+    "KitKat",
+    179,
+    true
+  ],
+  [
+    "M117",
+    "Frapped Base",
+    "Pistachio",
+    249,
+    true
+  ],
+  [
+    "M118",
+    "Frapped Base",
+    "Biscoff",
+    179,
+    true
+  ],
+  [
+    "M119",
+    "Frapped Base",
+    "Nutella",
+    179,
+    true
+  ],
+  [
+    "M120",
+    "Frapped Base",
+    "Oreo",
+    169,
+    true
+  ],
+  [
+    "M121",
+    "Frapped Base",
+    "Salted Caramel",
+    169,
+    true
+  ],
+  [
+    "M122",
+    "Frapped Base",
+    "Cookies N’ Cream",
+    159,
+    true
+  ],
+  [
+    "M123",
+    "Frapped Base",
+    "Chocolate Cheesecake",
+    159,
+    true
+  ],
+  [
+    "M124",
+    "Frapped Base",
+    "Blueberry Cheesecake",
+    159,
+    true
+  ],
+  [
+    "M125",
+    "Frapped Base",
+    "Strawberry Cheesecake",
+    159,
+    true
+  ],
+  [
+    "M126",
+    "Frapped Base",
+    "Matcha Cheesecake",
+    169,
+    true
+  ],
+  [
+    "M127",
+    "Alcoholic Beverages",
+    "Pilsen",
+    70,
+    true
+  ],
+  [
+    "M128",
+    "Alcoholic Beverages",
+    "San Mig Apple",
+    70,
+    true
+  ],
+  [
+    "M129",
+    "Croffles",
+    "Nutella Alcapone",
+    129,
+    true
+  ],
+  [
+    "M130",
+    "Croffles",
+    "Cookies N’ Cream",
+    129,
+    true
+  ],
+  [
+    "M131",
+    "Croffles",
+    "Caramel Biscoff",
+    129,
+    true
+  ],
+  [
+    "M132",
+    "Croffles",
+    "Banana Nutella",
+    129,
+    true
+  ],
+  [
+    "M133",
+    "Crepes",
+    "Nutella",
+    89,
+    true
+  ],
+  [
+    "M134",
+    "Crepes",
+    "Banana Nutella",
+    99,
+    true
+  ],
+  [
+    "M135",
+    "Crepes",
+    "Caramel Biscoff",
+    89,
+    true
+  ],
+  [
+    "M136",
+    "Pancakes",
+    "Banana Choco",
+    89,
+    true
+  ],
+  [
+    "M137",
+    "Pancakes",
+    "Banana Caramel",
+    89,
+    true
+  ],
+  [
+    "M138",
+    "Pancakes",
+    "Nutella Choco",
+    129,
+    true
+  ],
+  [
+    "M139",
+    "Pancakes",
+    "Nutella",
+    120,
+    true
+  ],
+  [
+    "M140",
+    "Pancakes",
+    "Strawberry",
+    99,
+    true
+  ],
+  [
+    "M141",
+    "Pancakes",
+    "Blueberry",
+    99,
+    true
+  ],
+  [
+    "M142",
+    "Waffles",
+    "Nutella",
+    99,
+    true
+  ],
+  [
+    "M143",
+    "Waffles",
+    "Oreo",
+    99,
+    true
+  ],
+  [
+    "M144",
+    "Waffles",
+    "Banana Choco",
+    89,
+    true
+  ],
+  [
+    "M145",
+    "Waffles",
+    "Banana Caramel",
+    89,
+    true
+  ]
+]

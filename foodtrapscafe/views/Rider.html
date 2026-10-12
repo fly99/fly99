@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Foodtraps Rider</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#f4f5f7;padding:18px;margin:0}
+    .card{background:#fff;padding:18px;border-radius:14px;margin:10px auto;max-width:760px;box-shadow:0 2px 12px #0001}
+    h1{margin-top:0}.field{width:100%;box-sizing:border-box;padding:12px;margin:6px 0;border:1px solid #ddd;border-radius:8px}
+    .btn{padding:11px 16px;border:0;border-radius:8px;background:#111;color:#fff;font-weight:bold;margin:4px;cursor:pointer}
+    .btn:disabled{opacity:.6;cursor:not-allowed}.loc{font-size:13px;color:#555}.live{color:#16803a;font-weight:700}
+    .error{background:#fee;padding:10px;border-radius:8px;color:#900;margin-top:10px}
+    .order{border:1px solid #eee;border-radius:12px;padding:14px;margin:10px 0}
+/* Elegant coffee-and-cream theme matched to Admin */:root{--brown:#5b351f;--brown2:#7a4b2a;--cream:#f8f2e8;--paper:#fffdf8;--line:#eadfce;--text:#2e241e;--muted:#85776c;--shadow:0 8px 25px rgba(72,44,26,.08)}*{box-sizing:border-box}body{font-family:'DM Sans',Arial,sans-serif;background:radial-gradient(ellipse at 12% 0%,rgba(214,185,145,.24),transparent 36%),linear-gradient(135deg,#f8f2e8,#f2e8d9);background-attachment:fixed;color:var(--text)}.card{position:relative;overflow:hidden;background:rgba(255,253,248,.96);border:1px solid var(--line);box-shadow:0 10px 32px rgba(72,44,26,.1),0 1px 2px rgba(72,44,26,.05)}.card:after{content:"✦";position:absolute;right:22px;top:14px;color:#caa978;font-size:19px;text-shadow:0 0 12px #f8e2b2;animation:riderSparkle 3.2s ease-in-out infinite;pointer-events:none}h1,h2,h3{color:var(--brown)}.field{border-color:var(--line);background:#fffdf8;color:var(--text);outline:none}.field:focus{border-color:var(--brown2);box-shadow:0 0 0 3px rgba(91,53,31,.1)}.btn{background:linear-gradient(110deg,#5b351f,#7a4b2a);box-shadow:0 3px 9px rgba(72,44,26,.18);transition:transform .18s ease,box-shadow .18s ease}.btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 14px rgba(72,44,26,.22)}.btn:disabled{opacity:.58}.loc{color:var(--muted)}.live{color:#5b351f}.error{background:#fff1f0;border:1px solid #f3d2cf;color:#a1261c}.order{background:#fffdf8;border-color:var(--line);box-shadow:0 4px 14px rgba(72,44,26,.06)}.carry-summary{margin:12px 0;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:linear-gradient(135deg,#fffdf8,#f8f2e8)}.carry-summary ul{list-style:none;margin:8px 0;padding:0}.carry-summary li{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px solid var(--line);font-size:13px}.carry-summary li span{white-space:nowrap;font-weight:700}.carry-summary>strong{display:block;margin-top:9px;color:var(--brown);font-size:16px}@keyframes riderSparkle{0%,100%{opacity:.45;transform:scale(.8) rotate(0)}50%{opacity:1;transform:scale(1.16) rotate(22deg)}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  .out-btn{background:linear-gradient(110deg,#5b351f,#7a4b2a);min-width:190px}.deliver-btn{background:#176b3a;min-width:190px}.out-btn:disabled,.deliver-btn:disabled{opacity:.6;cursor:wait}.directions-btn{display:inline-block;text-decoration:none}.cancel-btn{background:#b42318;color:#fff}.cancel-btn:hover:not(:disabled){background:#8f1d14}.rider-history h2{font-size:16px;margin-bottom:8px}.rider-history p,.rider-history input,.rider-history table{font-size:11px}.rider-history th,.rider-history td{padding:6px 7px}</style>
+</head>
+<body>
+<div class="card">
+  <div style="display:flex;align-items:center;gap:10px"><img src="assets/foodtraps-logo.png" alt="Foodtraps Café" style="width:110px;height:62px;object-fit:contain"><h1>FOODTRAPS CAFÉ — Delivery</h1></div>
+  <div id="app"></div>
+</div>
+<script>
+let currentUser='',currentRiderName='',deliveryStartAddress='',riderOrderRefreshTimer=null,lastRiderOrdersSnapshot='';
+const watches={};
+const app=document.getElementById('app');
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function directionsUrl(address,latitude,longitude){const hasPin=latitude!==null&&latitude!==undefined&&longitude!==null&&longitude!==undefined&&Number.isFinite(Number(latitude))&&Number.isFinite(Number(longitude));const destination=hasPin?`${Number(latitude)},${Number(longitude)}`:String(address||'').trim();const params=new URLSearchParams({api:'1',destination,travelmode:'driving'});if(deliveryStartAddress)params.set('origin',deliveryStartAddress);return 'https://www.google.com/maps/dir/?'+params.toString()}
+
+function showLogin(message=''){
+  if(riderOrderRefreshTimer){clearInterval(riderOrderRefreshTimer);riderOrderRefreshTimer=null}
+  currentUser='';currentRiderName='';
+  app.innerHTML=`
+    <img src="assets/foodtraps-logo.png" alt="Foodtraps Café" style="display:block;width:150px;height:84px;object-fit:contain;margin:0 auto 12px"><h2>Rider Login</h2>
+    <label>Username</label>
+    <input id="riderUsername" class="field" type="text" value="rider" autocomplete="username">
+    <label>Password</label>
+    <input id="riderPin" class="field" type="password" value="" placeholder="Enter password" autocomplete="current-password">
+    <button id="loginBtn" class="btn">LOGIN</button><button id="localTestLoginButton" class="btn" style="width:100%;background:#eee;color:#333" onclick="quickLocalTestLogin()">LOCAL TEST ACCESS</button>
+    <p class="loc">Allow GPS/location access when your browser asks. Location sharing starts only for an active delivery.</p>
+    <div id="loginError" class="error" style="display:${message?'block':'none'}">${esc(message)}</div>`;
+  document.getElementById('loginBtn').addEventListener('click',goLogin);
+  if(!['localhost','127.0.0.1','::1'].includes(location.hostname.toLowerCase()))document.getElementById('localTestLoginButton')?.remove();
+}
+
+function quickLocalTestLogin(){google.script.run.withSuccessHandler(r=>{currentUser=r.username;currentRiderName=r.fullName||r.username;loadRiderWorkspace()}).withFailureHandler(e=>{const err=document.getElementById('loginError');if(err){err.textContent=e.message||e;err.style.display='block'}}).startLocalTestSession('RIDER')}
+function goLogin(){
+  const username=document.getElementById('riderUsername').value.trim();
+  const pin=document.getElementById('riderPin').value;
+  const btn=document.getElementById('loginBtn');
+  const err=document.getElementById('loginError');
+  err.style.display='none';
+  if(!username||!pin){err.textContent='Please enter username and password.';err.style.display='block';return;}
+  btn.disabled=true;btn.textContent='LOGGING IN...';
+  google.script.run
+    .withSuccessHandler(r=>{
+      btn.disabled=false;btn.textContent='LOGIN';
+      if(!r||!r.ok){err.textContent=(r&&r.message)||'Invalid username or password.';err.style.display='block';return;}
+      currentUser=r.username||username;currentRiderName=String(r.fullName||r.username||username);
+      loadRiderWorkspace();
+    })
+    .withFailureHandler(e=>{
+      btn.disabled=false;btn.textContent='LOGIN';
+      err.textContent=(e&&e.message)||String(e)||'Login failed.';err.style.display='block';
+    })
+    .loginStaff(username,pin,'RIDER');
+}
+
+function loadRiderWorkspace(){google.script.run.withSuccessHandler(settings=>{deliveryStartAddress=String(settings?.deliveryStartAddress||'').trim();loadOrders();startRiderOrderRefresh()}).withFailureHandler(()=>{loadOrders();startRiderOrderRefresh()}).getSystemSettings()}
+function startRiderOrderRefresh(){if(riderOrderRefreshTimer)clearInterval(riderOrderRefreshTimer);riderOrderRefreshTimer=setInterval(()=>{if(currentUser&&!document.hidden)loadOrders(true)},8000)}
+function restoreRiderSession(){google.script.run.withSuccessHandler(session=>{if(session&&session.role==='RIDER'){currentUser=session.username||'';currentRiderName=String(session.fullName||session.username||'');loadRiderWorkspace()}else showLogin()}).withFailureHandler(()=>showLogin()).getStaffSession()}
+function loadOrders(silent=false){
+  if(!silent||!document.getElementById('riderTransactionHistory'))app.innerHTML='<p>Loading delivery orders...</p>';
+  google.script.run
+    .withSuccessHandler(list=>{const snapshot=JSON.stringify(list||[]);if(silent&&snapshot===lastRiderOrdersSnapshot)return;lastRiderOrdersSnapshot=snapshot;renderOrders(list)})
+    .withFailureHandler(e=>{
+      app.innerHTML='<div class="error">Unable to load rider orders: '+esc((e&&e.message)||e)+'</div><button class="btn" onclick="showLogin()">BACK TO LOGIN</button>';
+    })
+    .getRiderOrders();
+}
+
+function renderOrders(list){
+  if(!Array.isArray(list)||!list.length){
+    app.innerHTML=`<p>Logged in as <b>${esc(currentUser)}</b></p><p>No active delivery orders.</p><button class="btn" onclick="loadOrders()">REFRESH</button><button class="btn" onclick="showLogin()">LOG OUT</button>${riderHistoryMarkup()}`;
+    loadRiderTransactionHistory();
+    return;
+  }
+  app.innerHTML=`<p>Logged in as <b>${esc(currentUser)}</b></p>`+
+    list.map(o=>{
+      const status=String(o.status||'').toUpperCase(),out=status==='OUT FOR DELIVERY',ready=['READY','READY FOR DELIVERY'].includes(status),method=String(o.paymentMethod||'').toUpperCase(),cod=method==='COD',epayment=['GCASH','MAYA','BANK TRANSFER','OTHER E-PAYMENT'].includes(method),paid=Number(o.amountReceived||0)>=Number(o.total||0),assignedRider=String(o.riderUsername||'').trim(),assignedToOther=out&&assignedRider&&assignedRider.toLowerCase()!==String(currentUser||'').toLowerCase();
+      const items=Array.isArray(o.items)?o.items:[],itemCount=items.reduce((sum,item)=>sum+Number(item.quantity||0),0),instructions=String(o.specialInstructions||'').trim();
+      return `<div class="order">
+        <b>${esc(o.orderNumber)}</b>
+        <p>${esc(o.customerName)} — ${esc(o.contactNumber)}</p>
+        <p>📍 ${esc(o.deliveryAddress||((o.deliveryLatitude!==null&&o.deliveryLatitude!==undefined&&o.deliveryLongitude!==null&&o.deliveryLongitude!==undefined)?`${o.deliveryLatitude}, ${o.deliveryLongitude}`:'Delivery location not provided'))}</p>
+        ${instructions?`<div style="margin:10px 0;padding:9px 11px;background:#fff1d6;border-left:4px solid #b88950;border-radius:6px;color:#34251c;white-space:pre-wrap"><b>Customer special instructions</b><br>${esc(instructions)}</div>`:''}
+        ${(String(o.deliveryAddress||'').trim()||(o.deliveryLatitude!==null&&o.deliveryLatitude!==undefined&&o.deliveryLongitude!==null&&o.deliveryLongitude!==undefined))?`<a class="btn directions-btn" href="${esc(directionsUrl(o.deliveryAddress,o.deliveryLatitude,o.deliveryLongitude))}" target="_blank" rel="noopener noreferrer">🗺️ MAP DIRECTIONS</a>`:'<p class="loc">No delivery address or pinned location is available for directions.</p>'}
+        <div class="carry-summary"><b>Items to carry: ${itemCount}</b>${items.length?`<ul>${items.map(item=>`<li>${esc(item.itemName)} × ${Number(item.quantity||0)} <span>₱${Number(item.subtotal||0).toFixed(2)}</span></li>`).join('')}</ul>`:'<p class="loc">Item details unavailable.</p>'}<strong>Order value: ₱${Number(o.total||0).toFixed(2)}</strong>${paid?`<p style="margin:7px 0 0;font-weight:700;color:#176b3a">✓ ${cod?'PAYMENT COLLECTED':'PAID'}${cod?` · COD ₱${Number(o.total||0).toFixed(2)}`:''}${Number(o.change||0)>0?` · Change ₱${Number(o.change||0).toFixed(2)}`:''}</p>`:cod?`<p style="margin:7px 0 0;font-weight:700;color:#9a4c00">COD PAYMENT DUE · ₱${Number(o.total||0).toFixed(2)}</p>`:''}</div>
+        ${epayment?`<div class="carry-summary" style="margin-top:8px"><b>${esc(o.paymentMethod)} reference</b><div style="font-size:14px;font-weight:800;letter-spacing:.4px;margin:5px 0 8px;overflow-wrap:anywhere">${esc(o.paymentReference||'—')}</div><label style="display:flex;align-items:center;gap:8px;font-weight:700;color:${paid?'#176b3a':'#9a4c00'}"><input type="checkbox" ${paid?'checked':''} disabled style="width:17px;height:17px;margin:0">${paid?'Verified by Front Desk':'Awaiting Front Desk verification'}</label></div>`:''}
+        <p id="loc-${esc(o.orderNumber)}" class="loc">${assignedToOther?`<b>This delivery is already being managed by ${esc(assignedRider)}.</b>`:out?'<span class="live">● OUT FOR DELIVERY · rider location updates when GPS is available</span>':'Location sharing starts when you press OUT FOR DELIVERY.'}</p>
+        ${assignedToOther?'<button class="btn out-btn" disabled>ALREADY MANAGED BY ANOTHER RIDER</button>':out?(cod&&!paid?`<button class="btn out-btn" onclick="collectCod('${esc(o.orderNumber)}',${Number(o.total||0)},this)">COLLECT COD PAYMENT</button>`:epayment&&!paid?'<button class="btn deliver-btn" disabled>WAITING FOR FRONT DESK VERIFICATION</button>':`<button class="btn deliver-btn" onclick="changeStatus('${esc(o.orderNumber)}','DELIVERED',this)">MARK DELIVERED</button>`):ready?`<button class="btn out-btn" onclick="changeStatus('${esc(o.orderNumber)}','OUT FOR DELIVERY',this)">OUT FOR DELIVERY</button>`:'<button class="btn out-btn" disabled>WAITING FOR KITCHEN</button>'}
+        ${assignedToOther||out||!ready?'':`<button class="btn cancel-btn" onclick="cancelDelivery('${esc(o.orderNumber)}',this)">CANCEL ORDER</button>`}
+      </div>`
+    }).join('')+
+    '<button class="btn" onclick="loadOrders()">REFRESH</button><button class="btn" onclick="showLogin()">LOG OUT</button>'+riderHistoryMarkup();
+  loadRiderTransactionHistory();
+}
+let riderTransactionRows=[];function riderHistoryMarkup(){return `<section class="card rider-history" style="margin-top:18px"><h2>My Delivery Transaction History</h2><p class="loc">Completed or cancelled deliveries assigned to ${esc(currentUser)}.</p><input id="riderHistorySearch" class="field" type="search" placeholder="Search order, customer, date, or status" oninput="renderRiderTransactionHistory()"><div id="riderHistoryCount" class="loc"></div><div id="riderTransactionHistory" style="max-height:340px;overflow:auto"><p class="loc">Loading your history…</p></div></section>`}
+function loadRiderTransactionHistory(){const box=document.getElementById('riderTransactionHistory');if(!box||!currentUser)return;google.script.run.withSuccessHandler(rows=>{riderTransactionRows=rows||[];renderRiderTransactionHistory()}).withFailureHandler(e=>{const target=document.getElementById('riderTransactionHistory');if(target)target.innerHTML=`<div class="error">Unable to load delivery history: ${esc(e&&e.message||e)}</div>`}).getMyRiderTransactions()}
+function renderRiderTransactionHistory(){const target=document.getElementById('riderTransactionHistory');if(!target)return;const q=String(document.getElementById('riderHistorySearch')?.value||'').trim().toLowerCase(),rows=riderTransactionRows.filter(r=>!q||[r.orderNumber,r.customerName,r.date,r.time,r.status,r.paymentMethod].some(v=>String(v||'').toLowerCase().includes(q))),count=document.getElementById('riderHistoryCount');if(count)count.textContent=rows.length?`Showing ${rows.length} of ${riderTransactionRows.length} delivery records`:'';target.innerHTML=rows.length?`<table style="width:100%;min-width:720px;border-collapse:collapse"><thead><tr><th>Date / time</th><th>Order</th><th>Customer</th><th>Rider / Status</th><th>Payment</th><th>Order total</th><th>Cash collected</th><th>Change</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${esc(r.date)}<br>${esc(r.time)}</td><td><b>${esc(r.orderNumber)}</b></td><td>${esc(r.customerName)}</td><td><span style="font-size:10px;color:#777">${esc(currentRiderName||currentUser)}</span><br><b>${esc(r.status)}</b></td><td>${esc(r.paymentMethod)}</td><td>₱${Number(r.total||0).toFixed(2)}</td><td>₱${Number(r.collected||0).toFixed(2)}</td><td>₱${Number(r.change||0).toFixed(2)}</td></tr>`).join('')}</tbody></table>`:riderTransactionRows.length?'<p class="loc">No delivery records match your search.</p>':'<p class="loc">No completed or cancelled deliveries are recorded under your account yet.</p>'}
+function collectCod(id,total,button){const raw=prompt(`Collect Cash on Delivery payment from the customer.\nAmount due: ₱${Number(total).toFixed(2)}\nEnter the amount received:`,String(Number(total).toFixed(2)));if(raw===null)return;const amount=Number(raw);if(!Number.isFinite(amount)||amount<Number(total)){alert(`Collect the full amount of ₱${Number(total).toFixed(2)} before continuing.`);return}if(button){button.disabled=true;button.textContent='RECORDING PAYMENT…'}google.script.run.withSuccessHandler(result=>{const change=Number(result&&result.changeDue||0);alert(`COD payment recorded.${change>0?` Change due: ₱${change.toFixed(2)}.`:''} You can now mark the order delivered.`);loadOrders()}).withFailureHandler(e=>{if(button){button.disabled=false;button.textContent='COLLECT COD PAYMENT'}alert((e&&e.message)||e)}).collectRiderCOD(id,amount,currentUser)}
+function changeStatus(id,status,button){
+  const previous=button&&button.textContent;
+  if(button){button.disabled=true;button.textContent=status==='OUT FOR DELIVERY'?'UPDATING…':'UPDATING…'}
+  google.script.run
+    .withSuccessHandler(()=>{if(status==='OUT FOR DELIVERY')startLocation(id);if(status==='DELIVERED')stopLocation(id);loadOrders();})
+    .withFailureHandler(e=>{if(button){button.disabled=false;button.textContent=previous||status}alert((e&&e.message)||e)})
+    .updateRiderOrder(id,status,currentUser);
+}
+function cancelDelivery(id,button){
+  const reason=prompt('Why does this delivery need to be cancelled? Please enter a reason.');
+  if(reason===null)return;
+  const cleanReason=reason.trim();
+  if(cleanReason.length<3){alert('Please enter a cancellation reason (at least 3 characters).');return;}
+  if(button){button.disabled=true;button.textContent='CANCELLING…';}
+  google.script.run
+    .withSuccessHandler(()=>{stopLocation(id);loadOrders();})
+    .withFailureHandler(e=>{if(button){button.disabled=false;button.textContent='CANCEL ORDER';}alert((e&&e.message)||e)})
+    .cancelRiderOrder(id,cleanReason,currentUser);
+}
+function startLocation(id){
+  if(!navigator.geolocation){alert('This device does not support GPS location.');return;}
+  if(watches[id])return;
+  const el=document.getElementById('loc-'+id);
+  if(el)el.innerHTML='<span class="live">● LIVE LOCATION ACTIVE</span>';
+  const send=pos=>google.script.run.withFailureHandler(e=>console.warn(e)).updateRiderLocation(id,pos.coords.latitude,pos.coords.longitude,currentUser);
+  navigator.geolocation.getCurrentPosition(send,err=>alert('Please allow location access: '+err.message),{enableHighAccuracy:true,maximumAge:10000,timeout:15000});
+  watches[id]=navigator.geolocation.watchPosition(send,err=>console.warn(err),{enableHighAccuracy:true,maximumAge:10000,timeout:20000});
+}
+function stopLocation(id){if(watches[id]){navigator.geolocation.clearWatch(watches[id]);delete watches[id];}}
+
+restoreRiderSession();
+</script>
+</body>
+</html>
